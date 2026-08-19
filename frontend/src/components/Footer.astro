@@ -1,0 +1,42 @@
+---
+const currentYear = new Date().getFullYear();
+
+const toolLinks = [
+  { name: "Remove Duplicate Rows", href: "/tools/remove-duplicate-rows-csv" },
+  { name: "Trim Whitespace", href: "/tools/trim-whitespace-csv" },
+  { name: "Fill Missing Values", href: "/tools/fill-missing-values-csv" },
+  { name: "Standardize Dates", href: "/tools/convert-date-formats-csv" },
+  { name: "Clean Currency Symbols", href: "/tools/clean-currency-symbols-csv" },
+  { name: "Remove Empty Columns", href: "/tools/remove-empty-columns-csv" },
+  { name: "Split Column by Delimiter", href: "/tools/split-column-by-delimiter-csv" },
+  { name: "Normalize String Casing", href: "/tools/normalize-casing-csv" }
+];
+---
+
+<footer class="border-t border-slate-800 bg-[#161b22] py-8 mt-16 text-xs text-slate-400">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 space-y-6">
+    
+    <!-- Internal Linking Directory for SEO -->
+    <div>
+      <h4 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">Popular CSV Cleaning Tools</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+        {toolLinks.map((tool) => (
+          <a href={tool.href} class="text-slate-400 hover:text-emerald-400 transition-colors truncate">
+            {tool.name}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bottom Metadata -->
+    <div class="pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p>© {currentYear} CSV Cleaner. High-performance tabular data engine.</p>
+      <div class="flex items-center gap-5">
+        <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy</a>
+        <a href="/terms" class="hover:text-white transition-colors">Terms</a>
+        <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+
+  </div>
+</footer>

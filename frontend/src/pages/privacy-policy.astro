@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy - CSV Cleaner">
+  <Navbar />
+  <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 py-12 text-slate-300">
+    <h1 class="text-2xl font-bold text-white mb-6">Privacy Policy</h1>
+    
+    <div class="space-y-6 text-xs sm:text-sm leading-relaxed">
+      <section class="bg-[#161b22] border border-slate-800 rounded-xl p-5">
+        <h2 class="text-sm font-semibold text-white mb-2">1. Data Privacy & Zero Retention</h2>
+        <p class="text-slate-400">CSV Cleaner processes your uploaded CSV data solely for generating transformation schemas. We do not store permanently or train AI models on your datasets. All temporary files are deleted automatically within 15 minutes.</p>
+      </section>
+
+      <section class="bg-[#161b22] border border-slate-800 rounded-xl p-5">
+        <h2 class="text-sm font-semibold text-white mb-2">2. Token-Optimization Mechanism</h2>
+        <p class="text-slate-400">Only the first few sample rows and schema metadata are shared with the LLM API to generate code. Full datasets are executed inside an isolated local sandbox and never leave the microservice.</p>
+      </section>
+
+      <section class="bg-[#161b22] border border-slate-800 rounded-xl p-5">
+        <h2 class="text-sm font-semibold text-white mb-2">3. Cookies & Analytics</h2>
+        <p class="text-slate-400">We use essential cookies and anonymous analytics to maintain tool performance and user interface stability.</p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>

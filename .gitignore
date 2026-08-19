@@ -260,3 +260,9 @@ __pycache__/
 *.py[cod]
 .env
 .DS_Store
+
+
+
+storage/*.db
+*.db
+*.sqlite3

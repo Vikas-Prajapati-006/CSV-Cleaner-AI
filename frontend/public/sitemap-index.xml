@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Static Pages -->
+  <url>
+    <loc>https://csvcleaner.ai/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/privacy-policy</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/terms</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/contact</loc>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Programmatic SEO Tool Landing Pages -->
+  <url>
+    <loc>https://csvcleaner.ai/tools/remove-duplicate-rows-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/trim-whitespace-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/fill-missing-values-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/convert-date-formats-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/clean-currency-symbols-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/remove-empty-columns-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/split-column-by-delimiter-csv</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://csvcleaner.ai/tools/normalize-casing-csv</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>

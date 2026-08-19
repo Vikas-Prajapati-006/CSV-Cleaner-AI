@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Terms of Service - CSV Cleaner AI">
+  <Navbar />
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-12 text-slate-300">
+    <h1 class="text-3xl font-extrabold text-white mb-6">Terms of Service</h1>
+    
+    <div class="space-y-6 text-sm leading-relaxed">
+      <section>
+        <h2 class="text-lg font-bold text-slate-100 mb-2">1. Acceptance of Terms</h2>
+        <p>By accessing and using CSV Cleaner AI, you agree to comply with and be bound by these Terms of Service. If you disagree with any part, you may not use the application.</p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold text-slate-100 mb-2">2. Permitted Use</h2>
+        <p>This service is intended for tabular data sanitization and analysis. Users are prohibited from attempting code injections, unauthorized server access, or payload exploitations.</p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold text-slate-100 mb-2">3. Disclaimer of Warranties</h2>
+        <p>The service is provided "as is" without warranty of any kind. Always review the transformed data preview and verified Python code prior to production usage.</p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>

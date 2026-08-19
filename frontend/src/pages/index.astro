@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FAQ from '../components/FAQ.astro';
+import { CleanerApp } from '../components/CleanerApp';
+---
+
+<Layout title="CSV Cleaner — High Speed Tabular Sanitizer">
+  <Navbar />
+
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center">
+    <div class="text-center max-w-2xl mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+        Clean and Standardize CSVs Instantly
+      </h1>
+      <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+        Upload your raw spreadsheet, state the cleaning criteria, and generate sanitized datasets through verified AST-sandboxed execution.
+      </p>
+    </div>
+
+    <CleanerApp client:load />
+
+    {/* FAQ Component with Structured Schema */}
+    <FAQ />
+  </main>
+
+  <Footer />
+</Layout>

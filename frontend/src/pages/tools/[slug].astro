@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import FAQ from '../../components/FAQ.astro';
+import { CleanerApp } from '../../components/CleanerApp';
+
+export async function getStaticPaths() {
+  const toolList = [
+    {
+      slug: "remove-duplicate-rows-csv",
+      title: "Remove Duplicate Rows from CSV Online",
+      metaDescription: "Quickly identify and drop duplicate records from your CSV dataset using private, AST-verified Python transformations.",
+      heading: "Remove Duplicate Rows from CSV",
+      description: "Clean out exact or conditional duplicate records instantly without uploading your entire database to the cloud.",
+      defaultPrompt: "Identify and remove all duplicate rows across the entire dataset while retaining the first occurrence."
+    },
+    {
+      slug: "trim-whitespace-csv",
+      title: "Trim Whitespace and Clean Text Columns in CSV",
+      metaDescription: "Strip leading, trailing, and excessive spaces from text cells in your CSV files online for free.",
+      heading: "Trim Leading & Trailing Text Spaces",
+      description: "Standardize raw string entries, eliminate rogue spaces, and fix formatting irregularities across every text column.",
+      defaultPrompt: "Trim all leading and trailing whitespace from every string column and collapse double spaces."
+    },
+    {
+      slug: "fill-missing-values-csv",
+      title: "Fill Missing Values & Handle NaNs in CSV",
+      metaDescription: "Impute missing dataset numbers with median, mean, or zeros, and fill empty text columns with default markers.",
+      heading: "Fill Missing Values & Fix Empty Cells",
+      description: "Automatically impute null values, blank fields, and corrupted entries with mathematically accurate defaults.",
+      defaultPrompt: "Fill missing numeric values with 0 and replace empty text cells with 'Unknown'."
+    },
+    {
+      slug: "convert-date-formats-csv",
+      title: "Standardize Date Formats in CSV to ISO-8601",
+      metaDescription: "Convert messy, mixed date strings into uniform standard ISO YYYY-MM-DD format across your CSV.",
+      heading: "Standardize CSV Date Formats",
+      description: "Harmonize disparate dates (MM/DD/YYYY, DD-MM-YYYY, textual dates) into clean, database-ready ISO strings.",
+      defaultPrompt: "Standardize all date columns to ISO format YYYY-MM-DD and drop invalid datetime rows."
+    },
+    {
+      slug: "clean-currency-symbols-csv",
+      title: "Remove Currency Symbols and Format Numbers in CSV",
+      metaDescription: "Strip dollar signs, commas, and currency symbols to convert text price fields into numeric floats.",
+      heading: "Clean Currency Symbols & Parse Floats",
+      description: "Extract raw numeric floats from formatted financial strings containing $, €, commas, or unit symbols.",
+      defaultPrompt: "Strip all currency symbols ($/€) and commas from price columns and convert them into clean numeric float values."
+    },
+    {
+      slug: "remove-empty-columns-csv",
+      title: "Remove Completely Empty Columns from CSV",
+      metaDescription: "Identify and drop columns where all values are null or blank in your CSV file.",
+      heading: "Drop All Empty Columns in CSV",
+      description: "Scan your tabular dataset and automatically remove unpopulated or completely null feature columns.",
+      defaultPrompt: "Drop all columns where 100% of the values are null or empty."
+    },
+    {
+      slug: "split-column-by-delimiter-csv",
+      title: "Split Single CSV Column into Multiple Columns",
+      metaDescription: "Split full names, address lines, or compound strings by comma, space, or hyphen into distinct columns.",
+      heading: "Split Column by Delimiter Online",
+      description: "Separate compound string entries into individual normalized columns seamlessly.",
+      defaultPrompt: "Split the composite string column by delimiter into two clean separate columns."
+    },
+    {
+      slug: "normalize-casing-csv",
+      title: "Normalize and Standardize Text Casing in CSV",
+      metaDescription: "Convert all names and categorical values to lowercase, uppercase, or Title Case.",
+      heading: "Normalize CSV Text Casing",
+      description: "Eliminate random capitalization and standardize column text values into unified Title Case or lowercase.",
+      defaultPrompt: "Convert all text column values to Title Case and standardize headers to lowercase."
+    }
+  ];
+
+  return toolList.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool },
+  }));
+}
+
+const { tool } = Astro.props;
+---
+
+<Layout title={`${tool.title} — CSV Cleaner`} description={tool.metaDescription}>
+  <Navbar />
+
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center">
+    <div class="text-center max-w-2xl mb-8">
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono mb-3">
+        <span>Pre-configured Workflow</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+        {tool.heading}
+      </h1>
+      <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+        {tool.description}
+      </p>
+    </div>
+
+    <CleanerApp client:load initialInstruction={tool.defaultPrompt} />
+
+    <section class="w-full max-w-4xl mt-16 pt-12 border-t border-slate-800 text-slate-300 space-y-6">
+      <h2 class="text-lg font-bold text-white">Why Use Local AST-Sandboxed Cleaning?</h2>
+      <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+        Traditional online CSV utilities upload your entire data payload to untrusted servers. CSV Cleaner AI utilizes a zero-token metadata stream to generate deterministic Python code, executing transformations strictly within an isolated runtime environment without data leakage.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+        <div class="p-4 rounded-xl border border-slate-800 bg-[#161b22]">
+          <h3 class="text-xs font-semibold text-white mb-1">Zero Cloud Retention</h3>
+          <p class="text-[11px] text-slate-400">Temporary processing artifacts are purged automatically via server workers.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-slate-800 bg-[#161b22]">
+          <h3 class="text-xs font-semibold text-white mb-1">AST Verified Logic</h3>
+          <p class="text-[11px] text-slate-400">Restricted Python syntax tree ensures no unsafe system operations execute.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-slate-800 bg-[#161b22]">
+          <h3 class="text-xs font-semibold text-white mb-1">Full Export Freedom</h3>
+          <p class="text-[11px] text-slate-400">Download sanitized tabular datasets alongside clean generated Pandas scripts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Frequently Asked Questions Section with JSON-LD Schema -->
+    <FAQ />
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { RefreshCw, ServerCrash } from 'lucide-react';
+---
+
+<Layout title="500 - Server Error | CSV Cleaner">
+  <Navbar />
+
+  <main class="flex-1 max-w-xl mx-auto px-4 py-24 text-center flex flex-col items-center justify-center">
+    <div class="h-16 w-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-6">
+      <ServerCrash className="w-8 h-8" />
+    </div>
+
+    <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2 font-mono">500</h1>
+    <h2 class="text-lg font-semibold text-slate-200 mb-3">Internal Execution Error</h2>
+    <p class="text-xs text-slate-400 max-w-sm mb-8 leading-relaxed">
+      Something unexpected occurred during runtime processing. Please try reloading or check backend sandbox status.
+    </p>
+
+    <a
+      href="/"
+      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs transition-all shadow-md cursor-pointer"
+    >
+      <RefreshCw className="w-4 h-4" />
+      Reload Studio
+    </a>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,57 @@
+---
+const faqs = [
+  {
+    q: "Is it safe to clean sensitive CSV files here?",
+    a: "Yes. CSV Cleaner AI utilizes a zero-token architecture with an isolated Python AST sandbox. Your full raw dataset is never sent to third-party LLMs or stored permanently; all processing artifacts are purged immediately after execution."
+  },
+  {
+    q: "How does the AI clean CSV datasets?",
+    a: "Instead of ingesting your private data rows into external models, the system inspects only structural metadata (column types and schema) to generate verified Pandas transformation code, which executes locally inside a secure runtime sandbox."
+  },
+  {
+    q: "Can I clean large CSV files with thousands of rows?",
+    a: "Yes. Because transformations run on high-performance Pandas engines rather than LLM token streams, processing massive tabular datasets takes only milliseconds."
+  },
+  {
+    q: "Do I get the Python code used to clean my dataset?",
+    a: "Yes. Every completed job includes the exact, reproducible Pandas Python script used during transformation so you can inspect and reuse it in your own pipelines."
+  }
+];
+---
+
+<!-- FAQ Schema for Google Rich Snippets -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+})} />
+
+<section class="w-full max-w-4xl mx-auto mt-16 pt-10 border-t border-slate-800 space-y-6">
+  <div class="text-left">
+    <h2 class="text-xl font-bold text-white tracking-tight">Frequently Asked Questions</h2>
+    <p class="text-xs text-slate-400 mt-1">Everything you need to know about AST sandbox processing and tabular sanitization.</p>
+  </div>
+
+  <div class="space-y-3">
+    {faqs.map((faq) => (
+      <details class="group rounded-xl border border-slate-800 bg-[#161b22] p-4 transition-all duration-150 open:border-slate-700">
+        <summary class="flex cursor-pointer items-center justify-between font-medium text-xs sm:text-sm text-slate-200 select-none group-open:text-emerald-400">
+          <span>{faq.q}</span>
+          <span class="ml-4 shrink-0 transition-transform duration-200 group-open:rotate-180 text-slate-400">
+            ↓
+          </span>
+        </summary>
+        <p class="mt-3 text-xs text-slate-400 leading-relaxed font-sans border-t border-slate-800/60 pt-3">
+          {faq.a}
+        </p>
+      </details>
+    ))}
+  </div>
+</section>

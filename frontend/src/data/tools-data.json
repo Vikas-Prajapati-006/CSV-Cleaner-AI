@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "remove-duplicate-rows-csv",
+    "title": "Remove Duplicate Rows from CSV Online",
+    "metaDescription": "Quickly identify and drop duplicate records from your CSV dataset using private, AST-verified Python transformations.",
+    "heading": "Remove Duplicate Rows from CSV",
+    "description": "Clean out exact or conditional duplicate records instantly without uploading your entire database to the cloud.",
+    "defaultPrompt": "Identify and remove all duplicate rows across the entire dataset while retaining the first occurrence."
+  },
+  {
+    "slug": "trim-whitespace-csv",
+    "title": "Trim Whitespace and Clean Text Columns in CSV",
+    "metaDescription": "Strip leading, trailing, and excessive spaces from text cells in your CSV files online for free.",
+    "heading": "Trim Leading & Trailing Text Spaces",
+    "description": "Standardize raw string entries, eliminate rogue spaces, and fix formatting irregularities across every text column.",
+    "defaultPrompt": "Trim all leading and trailing whitespace from every string column and collapse double spaces."
+  },
+  {
+    "slug": "fill-missing-values-csv",
+    "title": "Fill Missing Values & Handle NaNs in CSV",
+    "metaDescription": "Impute missing dataset numbers with median, mean, or zeros, and fill empty text columns with default markers.",
+    "heading": "Fill Missing Values & Fix Empty Cells",
+    "description": "Automatically impute null values, blank fields, and corrupted entries with mathematically accurate defaults.",
+    "defaultPrompt": "Fill missing numeric values with 0 and replace empty text cells with 'Unknown'."
+  },
+  {
+    "slug": "convert-date-formats-csv",
+    "title": "Standardize Date Formats in CSV to ISO-8601",
+    "metaDescription": "Convert messy, mixed date strings into uniform standard ISO YYYY-MM-DD format across your CSV.",
+    "heading": "Standardize CSV Date Formats",
+    "description": "Harmonize disparate dates (MM/DD/YYYY, DD-MM-YYYY, textual dates) into clean, database-ready ISO strings.",
+    "defaultPrompt": "Standardize all date columns to ISO format YYYY-MM-DD and drop invalid datetime rows."
+  },
+  {
+    "slug": "clean-currency-symbols-csv",
+    "title": "Remove Currency Symbols and Format Numbers in CSV",
+    "metaDescription": "Strip dollar signs, commas, and currency symbols to convert text price fields into numeric floats.",
+    "heading": "Clean Currency Symbols & Parse Floats",
+    "description": "Extract raw numeric floats from formatted financial strings containing $, €, commas, or unit symbols.",
+    "defaultPrompt": "Strip all currency symbols ($/€) and commas from price columns and convert them into clean numeric float values."
+  }
+]
