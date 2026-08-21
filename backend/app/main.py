@@ -12,9 +12,10 @@ app = FastAPI(
 )
 
 # Configure Cross-Origin Resource Sharing (CORS)
+# allow_origins me "*" add karne se Cloudflare aur localhost dono seamlessly work karenge
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_list,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
