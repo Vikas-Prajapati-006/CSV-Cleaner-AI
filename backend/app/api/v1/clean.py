@@ -1,6 +1,8 @@
 import os
 import uuid
-import sqlite3
+import json
+import urllib.request
+import urllib.parse
 import pandas as pd
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, BackgroundTasks, Request
 from fastapi.responses import FileResponse
@@ -19,55 +21,53 @@ router = APIRouter()
 MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024  # 25 MB
 MAX_FREE_USAGE_PER_IDENTIFIER = 3
 
-DB_PATH = os.path.join(settings.STORAGE_DIR, "rate_limit.db")
-
-
-def init_db():
-    """Initializes the persistent SQLite table for rate limiting."""
-    os.makedirs(settings.STORAGE_DIR, exist_ok=True)
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS usage_tracking (
-                identifier TEXT PRIMARY KEY,
-                count INTEGER DEFAULT 0,
-                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """)
-        conn.commit()
-
-
-init_db()
+# Upstash Redis REST Config (Permanent Cloud Memory)
+UPSTASH_URL = os.getenv("UPSTASH_REDIS_REST_URL")
+UPSTASH_TOKEN = os.getenv("UPSTASH_REDIS_REST_TOKEN")
 
 
 def get_usage(identifier: str) -> int:
-    """Fetches the current usage count for a given identifier."""
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT count FROM usage_tracking WHERE identifier = ?", (identifier,))
-        row = cursor.fetchone()
-        return row[0] if row else 0
+    """Fetches persistent usage count from Upstash Redis or local memory fallback."""
+    if not UPSTASH_URL or not UPSTASH_TOKEN:
+        return 0
+    try:
+        url = f"{UPSTASH_URL.rstrip('/')}/get/{urllib.parse.quote(identifier)}"
+        req = urllib.request.Request(url, headers={"Authorization": f"Bearer {UPSTASH_TOKEN}"})
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            data = json.loads(resp.read().decode())
+            val = data.get("result")
+            return int(val) if val is not None else 0
+    except Exception as e:
+        logger.error(f"Redis get_usage error: {str(e)}")
+        return 0
 
 
 def increment_usage(identifier: str):
-    """Increments the persistent usage count."""
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO usage_tracking (identifier, count)
-            VALUES (?, 1)
-            ON CONFLICT(identifier) DO UPDATE SET
-                count = count + 1,
-                last_updated = CURRENT_TIMESTAMP
-        """, (identifier,))
-        conn.commit()
+    """Permanently increments usage count in Upstash Redis."""
+    if not UPSTASH_URL or not UPSTASH_TOKEN:
+        return
+    try:
+        url = f"{UPSTASH_URL.rstrip('/')}/incr/{urllib.parse.quote(identifier)}"
+        req = urllib.request.Request(url, headers={"Authorization": f"Bearer {UPSTASH_TOKEN}"})
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            pass
+    except Exception as e:
+        logger.error(f"Redis increment_usage error: {str(e)}")
 
 
 def get_client_ip(request: Request) -> str:
-    """Extract real client IP even behind reverse proxies like Render/Vercel."""
+    """Extract real client IP across Cloudflare, Render, and Reverse Proxies."""
+    # 1. Cloudflare True Client IP (Priority #1)
+    cf_connecting_ip = request.headers.get("cf-connecting-ip")
+    if cf_connecting_ip:
+        return cf_connecting_ip.strip()
+
+    # 2. Standard Proxy Forwarded Header
     forwarded = request.headers.get("x-forwarded-for")
     if forwarded:
         return forwarded.split(",")[0].strip()
+
+    # 3. Direct Connection
     return request.client.host if request.client else "unknown"
 
 
@@ -86,7 +86,7 @@ async def clean_csv(
     client_ip = get_client_ip(request)
     is_localhost = client_ip in ["127.0.0.1", "localhost", "::1", "testclient"]
 
-    # 1. Composite identifier: combines IP + Hardware Fingerprint
+    # Composite identifier: combines IP + Hardware Fingerprint
     tracking_id = f"{client_ip}_{fingerprint}" if not is_localhost else "localhost_dev"
 
     if not is_localhost:
@@ -141,11 +141,11 @@ async def clean_csv(
     file_path = os.path.join(settings.STORAGE_DIR, file_id)
     cleaned_df.to_csv(file_path, index=False)
 
-    # 7. Increment usage count in persistent SQLite store
+    # 7. Increment persistent cloud usage store
     if not is_localhost:
         increment_usage(tracking_id)
         increment_usage(client_ip)
-        logger.info(f"Usage persisted for [{tracking_id}] and IP [{client_ip}]")
+        logger.info(f"Persistent Cloud Usage recorded for [{tracking_id}] and IP [{client_ip}]")
 
     # 8. Trigger background cleanup of old files
     background_tasks.add_task(clean_old_files, settings.STORAGE_DIR)
